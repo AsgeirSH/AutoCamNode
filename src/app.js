@@ -27,7 +27,6 @@ const port = new SerialPort('/dev/tty.usbmodem144201', {
 const parser = port.pipe(new Readline({ delimiter: '\r\n' }))
 parser.on('data', function(data) {
     AutoCam.parse(data, function(camera) {
-        // TODO: ATEM command here
         console.log("Camera: "+camera);
         if(connected) {
             atem.changeProgramInput(camera);
