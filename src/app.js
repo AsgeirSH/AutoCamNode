@@ -7,7 +7,7 @@ console.log("Started AutoCamNode MiniStudio");
 
 var atem = new ATEM();
 var connected = false;
-atem.connect('10.10.1.10'); 
+atem.connect('10.8.0.10'); 
 
 atem.on('connect', function() {
     connected = true;
@@ -17,7 +17,7 @@ atem.on('disconnect', function() {
     connected = false;
 });
 
-const port = new SerialPort('/dev/ttyS1', {
+const port = new SerialPort('/dev/tty.usbmodem144201', {
     baudRate: 115200
 }, function (err) {
     if(err) 
