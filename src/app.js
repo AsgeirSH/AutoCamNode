@@ -5,6 +5,14 @@ const AutoCam = require('./autocamparser');
 
 console.log("Started AutoCamNode MiniStudio");
 
+var atem = new ATEM();
+var connected = false;
+atem.connect('10.10.1.10'); 
+
+atem.on('connect', function() {
+    connected = true;
+}
+
 const port = new SerialPort('/dev/ttyS1', {
     baudRate: 115200
 }, function (err) {
@@ -17,6 +25,10 @@ parser.on('data', function(data) {
     AutoCam.parse(data, function(camera) {
         // TODO: ATEM command here
         console.log("Camera: "+camera);
+        if(connected) {
+            atem.changeProgramInput(camera);
+        } else {
+            console.log("Not connected - not sending request.");
     });
 });
 
