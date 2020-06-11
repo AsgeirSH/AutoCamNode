@@ -1,0 +1,22 @@
+{
+  "name": "autocamnode",
+  "version": "1.0.0",
+  "description": "Topside SW for sending commands from an AutoCam-arduino to an ATEM video mixer",
+  "main": "src/app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AsgeirSH/AutoCamNode.git"
+  },
+  "author": "Asgeir Stavik Hustad <asgeirsh@ukmmedia.no> (https://www.github.com/AsgeirSH)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AsgeirSH/AutoCamNode/issues"
+  },
+  "homepage": "https://github.com/AsgeirSH/AutoCamNode#readme",
+  "dependencies": {
+    "applest-atem": "^0.2.4"
+  }
+}
