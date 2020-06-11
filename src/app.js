@@ -29,6 +29,7 @@ parser.on('data', function(data) {
             atem.changeProgramInput(camera);
         } else {
             console.log("Not connected - not sending request.");
+        }
     });
 });
 
