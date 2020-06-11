@@ -12,6 +12,10 @@ atem.connect('10.10.1.10');
 atem.on('connect', function() {
     connected = true;
 }
+        
+atem.on('disconnect', function() {
+    connected = false;
+}
 
 const port = new SerialPort('/dev/ttyS1', {
     baudRate: 115200
