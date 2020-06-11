@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/AsgeirSH/AutoCamNode#readme",
   "dependencies": {
-    "applest-atem": "^0.2.4"
+    "applest-atem": "^0.2.4",
+    "serialport": "^9.0.0"
   }
 }
