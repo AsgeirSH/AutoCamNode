@@ -1,12 +1,21 @@
 var debug = false;
 
 exports.parse = function(line, callback) {
-    if(line.startsWith("#CUT,")) {
+    // AC for commands sent to Arduino, ACR for responses sent from Arduino
+    if(line.startsWith("$ACR,")) {
+        // Find protocol functions
         var elements = line.split(',');
-        var newCamera = elements[1];
-        if(debug)
-            console.log("Switching to cam "+newCamera);
-        callback(newCamera);
+        var index = 1;
+        while (index < elements.length) {
+            switch(elements[index]) {
+               case 'STATUS': RX_STATUS(); break;
+                case 'CUT': index++; callback(elements[index]); break; // Add to index for every parameter
+                case 'INPUTS': index++; RX_INPUTS(elements[index]); break;
+                default: console.log("Unsupported $AC-command received: "+elements[index]+". Full cmd: "+line); break;
+            }
+            // Add index by one
+            index++;
+        }
     } else {
         // Debug-output or not-supported command
         if(debug) 
@@ -21,8 +30,21 @@ function test_callback(camera) {
 function test() {
     debug = true;
     console.log("Starting parser-tests");
-    exports.parse("#CUT,2", test_callback);
+    exports.parse("$ACR,CUT,2", test_callback);
     exports.parse("blank", test_callback);
-    exports.parse("#CUT,1", test_callback);
+    exports.parse("$ACR,CUT,1", test_callback);
+    exports.parse("$ACR,STATUS");
+    exports.parse("$ACR,STATUS,INPUTS,3");
 }
 
+// Returned on POLLSTATUS transmission
+function RX_STATUS(split_line) {
+    console.log("STATUS packet received");
+}
+
+function RX_INPUTS(val) {
+    console.log("INPUTS packet received, value "+val);
+}
+
+// Uncomment this and run `node src/autocamparser.js` to run tests.
+//test();
