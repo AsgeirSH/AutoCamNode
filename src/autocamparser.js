@@ -1,5 +1,7 @@
 var debug = false;
 
+exports.callbacks = [];
+
 exports.parse = function(line, callback) {
     // AC for commands sent to Arduino, ACR for responses sent from Arduino
     if(line.startsWith("$ACR,")) {
@@ -23,6 +25,14 @@ exports.parse = function(line, callback) {
     }
 }
 
+exports.addCallback = function(command, callback) {
+    this.callbacks[command] = callback;
+}
+
+exports.removeCallback = function(command) {
+    delete this.callbacks[command];
+}
+
 function test_callback(camera) {
     console.log(camera);
 }
@@ -35,6 +45,8 @@ function test() {
     exports.parse("$ACR,CUT,1", test_callback);
     exports.parse("$ACR,STATUS");
     exports.parse("$ACR,STATUS,INPUTS,3");
+
+    exports.addCallback("STATUS", function() {console.log("Status Callback OK")});
 }
 
 // Returned on POLLSTATUS transmission
@@ -47,4 +59,4 @@ function RX_INPUTS(val) {
 }
 
 // Uncomment this and run `node src/autocamparser.js` to run tests.
-//test();
+test();
